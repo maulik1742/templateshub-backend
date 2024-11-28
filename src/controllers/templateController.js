@@ -1,28 +1,31 @@
+import Template from "../models/templates.js";
 import * as TemplateService from "../services/templateService.js";
 
-// export const getTemplates = async (req, res) => {
-//   try {
-//     const { categoryId } = req.query;
-//     const query = {};
-//     console.log("categoryId :>> ", categoryId);
-//     if (categoryId) {
-//       query.categoryId = categoryId;
-//     }
-//     const templateData = await TemplateService.findTemplateById(query);
-//     console.log("templateData :>> ", templateData);
-//     return res.status(201).json({
-//       success: true,
-//       message: "get template successfully",
-//       data: templateData,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({
-//       success: false,
-//       message: "Error creating category",
-//       error: error.message,
-//     });
-//   }
-// };
+export const getTemplates = async (req, res) => {
+  try {
+    const { categoryId, id } = req.query;
+    const query = {};
+    console.log("categoryId :>> ", categoryId);
+    if (categoryId) {
+      query.categoryId = categoryId;
+    }
+    if (id) {
+      query._id = id;
+    }
+    const templateData = await TemplateService.findTemplateById(query);
+    return res.status(201).json({
+      success: true,
+      message: "get template successfully",
+      data: templateData,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error creating category",
+      error: error.message,
+    });
+  }
+};
 
 export const createTemplateController = async (req, res) => {
   try {

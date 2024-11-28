@@ -11,4 +11,9 @@ router.post(
   templateController.createTemplateController
 );
 
+router.get(
+  "/",
+  templateController.getTemplates
+);
+
 export default router;

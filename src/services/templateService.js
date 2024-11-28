@@ -7,12 +7,10 @@ export const createTemplate = async (templateData) => {
   return newTemplate;
 };
 
-// export const findTemplateById = async (query) => {
-//   console.log("query :>> ", query);
-//   const data = await Subcategory.find(query);
-//   console.log("data :>> ", data);
-//   return data;
-// };
+export const findTemplateById = async (query) => {
+  const data = await Template.find(query);
+  return data;
+};
 
 export const findSubCategoryById = async (query) => {
   console.log("findSubCategoryById :>> ", findSubCategoryById);

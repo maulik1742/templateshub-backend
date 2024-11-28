@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Route to create a user
 router.post("/", auth, categoryController.createCategoryController);
-router.post("/sub", auth, categoryController.createSubCategoryController);
+router.post("/subcategory", auth, categoryController.createSubCategoryController);
 
 router.get("/subcategory", categoryController.getSubCategories);
 

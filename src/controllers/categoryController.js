@@ -33,7 +33,7 @@ export const createCategoryController = async (req, res) => {
 export const createSubCategoryController = async (req, res) => {
   try {
     const { name } = req.body;
-    const categoryNameLowerCase = name.toLowerCase();
+    const categoryNameLowerCase = name?.toLowerCase();
     const existingCategory = await CategoryService.findSubCategoryByName(
       categoryNameLowerCase
     );
