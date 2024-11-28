@@ -6,7 +6,10 @@ const router = express.Router();
 
 // Route to create a user
 router.post("/", auth, categoryController.createCategoryController);
+router.post("/sub", auth, categoryController.createSubCategoryController);
 
-router.get("/", auth, categoryController.getCategory);
+router.get("/subcategory", categoryController.getSubCategories);
+
+router.get("/", categoryController.getCategory);
 
 export default router;

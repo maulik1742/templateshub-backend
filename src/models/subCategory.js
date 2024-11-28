@@ -1,19 +1,15 @@
 import mongoose from "mongoose";
 
-const templateSchema = new mongoose.Schema(
+const subcategorySchema = new mongoose.Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
       trim: true,
     },
-    content: {
-      type: String,
-      required: true,
-    },
-    subcategory: {
+    categoryId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Subcategory",
+      ref: "Category",
       required: true,
     },
     isDeleted: {
@@ -26,6 +22,6 @@ const templateSchema = new mongoose.Schema(
   }
 );
 
-const Template = mongoose.model("Template", templateSchema);
+const Subcategory = mongoose.model("Subcategory", subcategorySchema);
 
-export default Template;
+export default Subcategory;
