@@ -23,10 +23,15 @@ export const findSubCategoryByName = async (name) => {
   return await Subcategory.findOne({ name: name.toLowerCase() });
 };
 
-export const findSubCategoryByCategoryId = async (query) => {
-  console.log("query :>> ", query);
+export const findSubCategoryByCategoryId = async (obj) => {
+  let query = {};
+  if (obj?.search) {
+    query.name = { $regex: obj?.search, $options: "i" };
+  }
+  if (obj?.categoryId) {
+    query.categoryId = obj?.categoryId;
+  }
   const data = await Subcategory.find(query);
-  console.log("data :>> ", data);
   return data;
 };
 

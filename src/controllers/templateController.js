@@ -3,11 +3,13 @@ import * as TemplateService from "../services/templateService.js";
 
 export const getTemplates = async (req, res) => {
   try {
-    const { categoryId, id } = req.query;
+    const { subcategory, id, search } = req.query;
     const query = {};
-    console.log("categoryId :>> ", categoryId);
-    if (categoryId) {
-      query.categoryId = categoryId;
+    if (subcategory) {
+      query.subcategory = subcategory;
+    }
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
     }
     if (id) {
       query._id = id;
@@ -27,7 +29,7 @@ export const getTemplates = async (req, res) => {
   }
 };
 
-export const createTemplateController = async (req, res) => {
+export const createTemplate = async (req, res) => {
   try {
     const { title, content, subcategory } = req.body;
     const newTemplate = new Template({
@@ -36,34 +38,6 @@ export const createTemplateController = async (req, res) => {
       subcategory,
     });
     await newTemplate.save();
-
-    // if (!title || !subcategory) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Title and subcategory are required.",
-    //   });
-    // }
-    // const templateNameLowerCase = title.toLowerCase();
-    // const existingSubcategory = await TemplateService.findSubCategoryById(
-    //   subcategory
-    // );
-    // if (!existingSubcategory) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "template already exists, please choose another name.",
-    //   });
-    // }
-    // const existingTemplate = await TemplateService.findTemplateByTitle(
-    //   templateNameLowerCase
-    // );
-    // if (existingTemplate) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Template already exists, please choose another name.",
-    //   });
-    // }
-    // const templateData = { ...req.body, title: templateNameLowerCase };
-    // const newTemplate = await TemplateService.createTemplate(templateData);
 
     return res.status(201).json({
       success: true,
@@ -76,5 +50,33 @@ export const createTemplateController = async (req, res) => {
       message: "Error creating in template",
       error: error.message,
     });
+  }
+};
+export const searchTemplate = async (req, res) => {
+  try {
+    const { query } = req.query;
+    if (!query) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const templates = await Template.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+      ],
+    });
+    console.log("templates :>> ", templates);
+
+    if (templates.length === 0) {
+      return res.status(404).json({ message: "No templates found" });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Templates found",
+      data: templates,
+    });
+  } catch (error) {
+    console.error("Error searching templates:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

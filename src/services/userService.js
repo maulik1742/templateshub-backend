@@ -31,7 +31,7 @@ export const loginUser = async (email, password) => {
         isAdmin: user.isAdmin,
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" }
     );
     console.log("token :>> ", token);
     return { success: true, token, user };

@@ -5,15 +5,8 @@ import auth from "../middlewares/auth.js";
 const router = express.Router();
 
 // Route to create a template
-router.post(
-  "/save-template",
-  auth,
-  templateController.createTemplateController
-);
-
-router.get(
-  "/",
-  templateController.getTemplates
-);
+router.post("/save-template", auth, templateController.createTemplate);
+router.get("/search", templateController.searchTemplate);
+router.get("/", templateController.getTemplates);
 
 export default router;

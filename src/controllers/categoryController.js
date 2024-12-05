@@ -62,11 +62,13 @@ export const createSubCategoryController = async (req, res) => {
 
 export const getSubCategories = async (req, res) => {
   try {
-    const { categoryId } = req.query;
+    const { categoryId, search } = req.query;
     const query = {};
-    console.log("categoryId :>> ", categoryId);
     if (categoryId) {
       query.categoryId = categoryId;
+    }
+    if (search) {
+      query.search = search;
     }
     const categoryData = await CategoryService.findSubCategoryByCategoryId(
       query
@@ -89,7 +91,6 @@ export const getSubCategories = async (req, res) => {
 export const getCategory = async (req, res) => {
   try {
     const { search } = req.query;
-    console.log("search :>> ", search);
     const obj = { search };
     const categoryData = await CategoryService.getCategories(obj);
     return res.status(201).json({
