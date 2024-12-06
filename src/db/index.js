@@ -4,7 +4,11 @@ const uri =
   "mongodb+srv://mauliksolanki2002:Maulik%401742@cluster0.r46zm.mongodb.net/templateshub"; // Replace with your MongoDB connection string
 
 mongoose
-  .connect(uri)
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000,
+  })
   .then(() => {
     console.log("Connected to MongoDB successfully!");
   })
