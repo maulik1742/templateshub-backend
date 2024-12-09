@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
-const uri = "mongodb://127.0.0.1:27017/templateshub"; // Replace with your MongoDB connection string
+const uri1 =
+  "mongodb+srv://mauliksolanki2002:Maulik%401742@cluster0.r46zm.mongodb.net/templateshub"; // Replace with your MongoDB connection string
 
 mongoose
-  .connect(uri)
+  .connect(uri1)
   .then(() => {
     console.log("Connected to MongoDB successfully!");
   })
